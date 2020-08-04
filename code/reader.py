@@ -95,7 +95,7 @@ def read_dataset(domain, phase, vocab, maxlen):
     return data_x, maxlen_x
 
 
-def get_data(domain, vocab_size=0, maxlen=0, require_test=False):
+def get_data(domain, vocab_size=0, maxlen=0, require_test=True):
     print('Reading data from ' + domain)
     print(' Creating vocab ...')
     vocab = create_vocab(domain, maxlen, vocab_size)
