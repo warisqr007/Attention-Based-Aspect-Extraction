@@ -57,6 +57,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--domain", dest="domain", type=str, metavar='<str>', default='restaurant',
                         help="domain of the corpus")
+    parser.add_argument("--require_test", dest="require_test", action='store_true', default=False,
+                        help="require to run on test set")
     args = parser.parse_args()
 
     preprocess(args.domain)
