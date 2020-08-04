@@ -95,18 +95,22 @@ def read_dataset(domain, phase, vocab, maxlen):
     return data_x, maxlen_x
 
 
-def get_data(domain, vocab_size=0, maxlen=0):
+def get_data(domain, vocab_size=0, maxlen=0, require_test=False):
     print('Reading data from ' + domain)
     print(' Creating vocab ...')
     vocab = create_vocab(domain, maxlen, vocab_size)
     print(' Reading dataset ...')
     print('  train set')
     train_x, train_maxlen = read_dataset(domain, 'train', vocab, maxlen)
-    print('  test set')
-    test_x, test_maxlen = read_dataset(domain, 'test', vocab, maxlen)
-    maxlen = max(train_maxlen, test_maxlen)
-    return vocab, train_x, test_x, maxlen
-
+    if(require_test):
+        print('  test set')
+        test_x, test_maxlen = read_dataset(domain, 'test', vocab, maxlen)
+        maxlen = max(train_maxlen, test_maxlen)
+        return vocab, train_x, test_x, maxlen
+    
+    maxlen = train_maxlen
+    return vocab, train_x, maxlen
+    
 
 if __name__ == "__main__":
     vocab, train_x, test_x, maxlen = get_data('restaurant')
