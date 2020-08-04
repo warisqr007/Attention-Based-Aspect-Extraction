@@ -22,7 +22,7 @@ U.print_args(args)
 # assert args.domain in {'restaurant', 'beer'}
 
 ###### Get test data #############
-vocab, train_x, _, overall_maxlen = dataset.get_data(args.domain, vocab_size=args.vocab_size, maxlen=args.maxlen)
+vocab, train_x, overall_maxlen = dataset.get_data(args.domain, vocab_size=args.vocab_size, maxlen=args.maxlen, require_test=False)
 test_x = train_x 
 test_x = sequence.pad_sequences(test_x, maxlen=overall_maxlen)
 test_length = test_x.shape[0]
