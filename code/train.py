@@ -49,9 +49,8 @@ if args.seed > 0:
 from keras.preprocessing import sequence
 import reader as dataset
 
-vocab, train_x, test_x, overall_maxlen = dataset.get_data(args.domain, vocab_size=args.vocab_size, maxlen=args.maxlen)
+vocab, train_x, overall_maxlen = dataset.get_data(args.domain, vocab_size=args.vocab_size, maxlen=args.maxlen)
 train_x = sequence.pad_sequences(train_x, maxlen=overall_maxlen)
-test_x = sequence.pad_sequences(test_x, maxlen=overall_maxlen)
 
 # train_x = train_x[0:30000]
 print('Number of training examples: ', len(train_x))
