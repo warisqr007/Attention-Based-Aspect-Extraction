@@ -87,9 +87,13 @@ def evaluation(true, predict, domain):
 
 
 def prediction(test_labels, aspect_probs, cluster_map, domain):
+    predict_labels = generateLabels(aspect_probs, cluster_map)
+    evaluation(open(test_labels), predict_labels, domain)
+
+def generateLabels(aspect_probs, cluster_map):
     label_ids = np.argsort(aspect_probs, axis=1)[:, -1]
     predict_labels = [cluster_map[label_id] for label_id in label_ids]
-    evaluation(open(test_labels), predict_labels, domain)
+    return predict_labels
 
 
 ## Create a dictionary that map word index to word 
