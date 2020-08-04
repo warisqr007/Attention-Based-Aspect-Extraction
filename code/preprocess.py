@@ -45,11 +45,12 @@ def preprocess_test(domain):
             out2.write(label + '\n')
 
 
-def preprocess(domain):
+def preprocess(domain, require_test=True):
     print('\t' + domain + ' train set ...')
     preprocess_train(domain)
-    print('\t' + domain + ' test set ...')
-    preprocess_test(domain)
+    if(require_test):
+        print('\t' + domain + ' test set ...')
+        preprocess_test(domain)
 
 
 if __name__ == "__main__":
