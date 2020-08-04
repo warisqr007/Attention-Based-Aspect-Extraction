@@ -61,4 +61,4 @@ if __name__ == "__main__":
                         help="require to run on test set")
     args = parser.parse_args()
 
-    preprocess(args.domain)
+    preprocess(args.domain, args.require_test)
