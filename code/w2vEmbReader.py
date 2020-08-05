@@ -59,12 +59,9 @@ class W2VEmbReader:
 
     def get_aspect_matrix(self, n_clusters=0):
         seed_words_path = os.path.join(self.data_path, "seed_words.txt")
-        self.aspect_size = n_clusters
-        km = KMeans(n_clusters=n_clusters)
-        km.fit(self.emb_matrix)
-        km_aspects = km.cluster_centers_
+        aspects = []
+        self.aspect_size = 0
         if os.path.exists(seed_words_path):
-            aspects = []
             morph = pymorphy2.MorphAnalyzer()
             with open(seed_words_path) as f:
                 for line in f:
@@ -79,10 +76,21 @@ class W2VEmbReader:
                         print("Not initialized:\t" + line)
                         one_aspect = np.random.random((self.emb_dim,))
                     aspects.append(one_aspect)
-            self.aspect_size += len(aspects)
+            self.aspect_size = len(aspects)
+            
+        self.aspect_size += n_clusters
+        if(n_clusters>0):
+          km = KMeans(n_clusters=n_clusters)
+          km.fit(self.emb_matrix)
+          km_aspects = km.cluster_centers_
+          if os.path.exists(seed_words_path):
             aspects = np.concatenate((km_aspects, np.stack(aspects)), axis=0)
-        else:
+          else:
             aspects = km_aspects
+        else:
+          km = KMeans(n_clusters=self.aspect_size, init=np.stack(aspects), n_init=1)
+          km.fit(self.emb_matrix)
+          aspects = km.cluster_centers_
         # L2 normalization
         norm_aspect_matrix = aspects / np.linalg.norm(aspects, axis=-1, keepdims=True)
         return norm_aspect_matrix
