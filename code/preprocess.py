@@ -20,6 +20,7 @@ def parseSentence(line):
 def preprocess_train(domain):
     #f = codecs.open('../datasets/' + domain + '/train.txt', 'r', 'utf-8')
     #out = codecs.open('../preprocessed_data/' + domain + '/train.txt', 'w', 'utf-8')
+    
     in_path = '../datasets/%s/train.pkl' % (domain)
     out_path = '../preprocessed_data/%s/train.pkl' % (domain)
     
