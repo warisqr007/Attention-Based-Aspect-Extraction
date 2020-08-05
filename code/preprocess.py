@@ -5,6 +5,7 @@ import codecs
 import json
 from tqdm import tqdm
 import argparse
+import pandas as pd
 
 
 def parseSentence(line):
@@ -17,13 +18,22 @@ def parseSentence(line):
 
 
 def preprocess_train(domain):
-    f = codecs.open('../datasets/' + domain + '/train.txt', 'r', 'utf-8')
-    out = codecs.open('../preprocessed_data/' + domain + '/train.txt', 'w', 'utf-8')
+    #f = codecs.open('../datasets/' + domain + '/train.txt', 'r', 'utf-8')
+    #out = codecs.open('../preprocessed_data/' + domain + '/train.txt', 'w', 'utf-8')
+    in_path = '../datasets/%s/train.pkl' % (domain)
+    out_path = '../preprocessed_data/%s/train.pkl' % (domain)
+    
+    data = pd.read_pickle(in_path)
+    data['content'] = data['content'].apply(lambda row : parseSentence(row['content']), axis = 1)
+    
+    data.to_pickle(out_path)
 
+    '''
     for line in f:
         tokens = parseSentence(line)
         if len(tokens) > 0:
             out.write(' '.join(tokens) + '\n')
+    '''
 
 
 def preprocess_test(domain):
