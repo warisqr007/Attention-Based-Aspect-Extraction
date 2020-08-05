@@ -1,6 +1,7 @@
 import codecs
 import re
 import operator
+import pandas as pd
 
 num_regex = re.compile('^[+-]?[0-9]+\.?[0-9]*$')
 
@@ -11,15 +12,15 @@ def is_number(token):
 
 def create_vocab(domain, maxlen=0, vocab_size=0):
     # assert domain in {'restaurant', 'beer'}
-    source = '../preprocessed_data/' + domain + '/train.txt'
-
+    source = '../preprocessed_data/' + domain + '/train.pkl'
+    df = pd.read_pickle(source)
     total_words, unique_words = 0, 0
     word_freqs = {}
     top = 0
 
-    fin = codecs.open(source, 'r', 'utf-8')
-    for line in fin:
-        words = line.split()
+    #fin = codecs.open(source, 'r', 'utf-8')
+    for index, row in df.iterrows(): 
+        words = row['content'].split()
         if maxlen > 0 and len(words) > maxlen:
             continue
 
@@ -62,14 +63,15 @@ def read_dataset(domain, phase, vocab, maxlen):
     # assert domain in {'restaurant', 'beer'}
     assert phase in {'train', 'test'}
 
-    source = '../preprocessed_data/' + domain + '/' + phase + '.txt'
+    source = '../preprocessed_data/' + domain + '/' + phase + '.pkl'
     num_hit, unk_hit, total = 0., 0., 0.
     maxlen_x = 0
     data_x = []
-
-    fin = codecs.open(source, 'r', 'utf-8')
-    for line in fin:
-        words = line.strip().split()
+    
+    df = pd.read_pickle(source)
+    #fin = codecs.open(source, 'r', 'utf-8')
+    for index, row in df.iterrows(): 
+        words = row['content'].strip().split()
         if maxlen > 0 and len(words) > maxlen:
             words = words[:maxlen]
         if not len(words):
