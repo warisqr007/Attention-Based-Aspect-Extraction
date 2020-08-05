@@ -14,7 +14,8 @@ def parseSentence(line):
     text_token = CountVectorizer().build_tokenizer()(line.lower())
     text_rmstop = [i for i in text_token if i not in stop]
     text_stem = [lmtzr.lemmatize(w) for w in text_rmstop]
-    return text_stem
+    parsedText = ' '.join(text_stem)
+    return parsedText
 
 
 def preprocess_train(domain):
