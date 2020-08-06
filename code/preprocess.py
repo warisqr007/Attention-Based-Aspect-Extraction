@@ -26,7 +26,7 @@ def preprocess_train(domain):
     out_path = '../preprocessed_data/%s/train.pkl' % (domain)
     
     data = pd.read_pickle(in_path)
-    data['content'] = data['content'].apply(lambda row : parseSentence(row['content']), axis = 1)
+    data['content'] = data.apply(lambda row : parseSentence(row['content']), axis=1)
     
     data.to_pickle(out_path)
 

@@ -1,0 +1,7 @@
+Punctuality, Time, hour, boarding, minutes, delay, day arrival, departure, quick, schedule, cancel, wait, miss, late, postpone
+beverages, Food, meal, drinks, water, breakfast, coffee, dinner, lunch, sandwich, snack
+Comfort, Seat, cabin, leg, lounge, room, legroom, seating, row, landing, sleep, space
+behavior, Crew, staff, attendants, people, ground
+Entertainment, experience, inflight, movies, tv
+Check in, luggage, board, baggage, terminal
+Cost, pay, price, ticket, value

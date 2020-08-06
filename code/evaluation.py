@@ -4,6 +4,7 @@ from tqdm import tqdm
 from sklearn.metrics import classification_report
 import keras.backend as K
 from keras.preprocessing import sequence
+import pandas as pd
 
 import utils as U
 import reader as dataset
@@ -151,11 +152,15 @@ for c in range(len(test_x)):
 ## cluster_map need to be specified manually according to the top words in each inferred aspect (save in aspect.log)
 
 # map for the pre-trained restaurant model (under pre_trained_model/restaurant)
-# cluster_map = {0: 'Food', 1: 'Miscellaneous', 2: 'Miscellaneous', 3: 'Food',
-#            4: 'Miscellaneous', 5: 'Food', 6:'Price',  7: 'Miscellaneous', 8: 'Staff', 
-#            9: 'Food', 10: 'Food', 11: 'Anecdotes', 
-#            12: 'Ambience', 13: 'Staff'}
+cluster_map = {0: 'Punctuality', 1: 'Food', 2: 'Comfort', 3: 'Crew behavior',
+            4: 'Entertainment', 5: 'Check in', 6:'Value for Money'}
 
-# print '--- Results on %s domain ---' % (args.domain)
-# test_labels = '../preprocessed_data/%s/test_label.txt' % (args.domain)
+print('--- Results on %s domain ---' % (args.domain))
+file_path = '../preprocessed_data/%s/train.pkl' % (args.domain)
+out_path = '../output/%s/output.pkl' % (args.domain)
 # prediction(test_labels, aspect_probs, cluster_map, domain=args.domain)
+predicted_labels = generateLabels(aspect_probs, cluster_map)
+data = pd.read_pickle(file_path)
+data['Predicted_Label'] = predicted_labels
+data.to_pickle(out_path)
+print('Done!')

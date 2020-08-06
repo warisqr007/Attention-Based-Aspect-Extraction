@@ -13,7 +13,8 @@ class MySentences(object):
             yield line.split()
         '''
         data = pd.read_pickle(self.filename)
-        return data.content
+        for i in range(len(data)):
+          yield data.iloc[i].content.split()
 
 
 def main(domain):
@@ -28,3 +29,5 @@ print('Pre-training word embeddings ...')
 # main('restaurant')
 # main('beer')
 # main('laptops')
+main('airline')
+print('Done!')
